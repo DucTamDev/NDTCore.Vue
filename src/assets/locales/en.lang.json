@@ -1,0 +1,15 @@
+{
+  "hello": "Hello",
+  "welcome": "Welcome to our website!",
+  "goodbye": "Goodbye",
+  "thank_you": "Thank you",
+  "login": "Login",
+  "signup": "Sign Up",
+  "email": "Email Address",
+  "password": "Password",
+  "submit": "Submit",
+  "cancel": "Cancel",
+  "search": "Search",
+  "profile": "Profile",
+  "settings": "Settings"
+}
