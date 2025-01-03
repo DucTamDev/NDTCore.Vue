@@ -1,18 +1,15 @@
 <script setup lang="ts">
-  import { RouterLink, RouterView } from 'vue-router';
+  import { RouterView } from 'vue-router';
 </script>
 
 <template>
-  <header>
-    <div class="wrapper">
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
-      </nav>
-    </div>
-  </header>
-
-  <RouterView />
+  <div class="app-wrapper">
+    <RouterView />
+  </div>
 </template>
 
-<style scoped></style>
+<style lang="scss" scoped>
+  .app-wrapper {
+    background-color: $background-color;
+  }
+</style>

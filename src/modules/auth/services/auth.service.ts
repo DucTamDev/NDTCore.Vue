@@ -1,8 +1,6 @@
 import { ResponseLogin } from '@/modules/auth/models/ResponseLogin';
 import { RequestLogin } from '@/modules/auth/models/RequestLogin';
 import AuthApi from '@modules/auth/apis/auth.api';
-import { inject } from 'vue';
-import type { Logger } from '@/core/plugins/logger.plugin';
 
 class AuthService {
   private login: ResponseLogin = new ResponseLogin();

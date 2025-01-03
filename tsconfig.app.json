@@ -12,11 +12,11 @@
   "compilerOptions": {
     "composite": true,
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
-
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"],
       "@assets/*": ["./src/assets/*"],
+      "@router/*": ["./src/router/*"],
       "@core/*": ["./src/core/*"],
       "@modules/*": ["./src/modules/*"],
       "@shared/*": ["./src/shared/*"],
@@ -24,7 +24,6 @@
       "@env/*": ["./src/environments/*"]
     },
     "types": ["node"],
-
     "esModuleInterop": true,
     "skipLibCheck": true
   }

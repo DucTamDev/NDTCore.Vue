@@ -1,18 +1,53 @@
+import MainLayout from '@/shared/layouts/MainLayout.vue';
+import BlankLayout from '@/shared/layouts/BlankLayout.vue';
+import AboutView from '@/views/AboutView.vue';
 import HomeView from '@/views/HomeView.vue';
+import NotFoundView from '@/views/NotFoundView.vue';
 
 const routes = [
   {
-    path: '/',
-    name: 'home',
-    component: HomeView
+    path: '',
+    name: 'MainLayout',
+    component: MainLayout,
+    children: [
+      {
+        path: '',
+        exact: true,
+        alias: 'home',
+        name: 'Home',
+        component: HomeView,
+        meta: { title: 'home' }
+      },
+      {
+        path: 'about',
+        alias: 'about',
+        name: 'About',
+        component: AboutView,
+        meta: { title: 'about' }
+      }
+    ]
   },
   {
-    path: '/about',
-    name: 'about',
-    // route level code-splitting
-    // this generates a separate chunk (About.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import('@/views/AboutView.vue')
+    path: '/:pathMatch(.*)*',
+    name: 'BlankLayout',
+    component: BlankLayout,
+    children: [
+      {
+        path: 'login',
+        alias: 'login',
+        name: 'NotFound',
+        component: NotFoundView,
+        meta: { title: 'login' }
+      },
+      {
+        path: '',
+        alias: 'not-found',
+        name: 'NotFound',
+        component: NotFoundView,
+        meta: { title: 'notfound' }
+      }
+    ]
   }
 ];
+
 export default routes;

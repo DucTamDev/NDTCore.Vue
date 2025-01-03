@@ -5,7 +5,7 @@
 </template>
 
 <script setup lang="ts">
-  import ProductComponent from '@/modules/product/components/Product.vue';
+  import ProductComponent from '@modules/product/components/Product.vue';
 </script>
 
 <style>

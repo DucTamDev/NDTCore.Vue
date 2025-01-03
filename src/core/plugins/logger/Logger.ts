@@ -32,7 +32,8 @@ export class Logger implements ILogger {
    */
   private setDefaults(): LoggerOptions {
     return {
-      logLevel: LogLevel.Information,
+      enable: true,
+      logLevel: LogLevel.Debug,
       timestampFormat: 'yyyy-MM-dd HH:mm:ss',
       separator: ' | '
     };
@@ -46,6 +47,7 @@ export class Logger implements ILogger {
    */
   private mergeOptions(defaultOptions: LoggerOptions, options?: LoggerOptions): LoggerOptions {
     return {
+      enable: options?.enable ?? true,
       logLevel: options?.logLevel ?? defaultOptions.logLevel,
       timestampFormat: options?.timestampFormat ?? defaultOptions.timestampFormat,
       separator: options?.separator ?? defaultOptions.separator
@@ -57,7 +59,7 @@ export class Logger implements ILogger {
    * @param level The log level of the message to log.
    */
   private shouldLog(level: LogLevel): boolean {
-    return level >= this.options.logLevel && this.options.logLevel !== LogLevel.None;
+    return this.options.enable == true && level >= this.options.logLevel;
   }
 
   /**

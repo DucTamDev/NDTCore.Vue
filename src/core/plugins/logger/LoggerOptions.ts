@@ -1,6 +1,7 @@
 import { LogLevel } from './LogLevel';
 
 export interface LoggerOptions {
+  enable: boolean;
   logLevel: LogLevel;
   separator?: string;
   timestampFormat?: string;
