@@ -7,10 +7,11 @@ const router = createRouter({
   routes
 });
 
-router.beforeEach(async to => {
+router.beforeEach(async (to, from, next) => {
+  const i18nInstance = await i18n.getI18n();
   const titleKey = to.meta.title as string | undefined;
 
-  const translatedTitle = titleKey ? i18n.global.t(titleKey.toLocaleLowerCase()) : titleKey;
+  const translatedTitle = titleKey ? i18nInstance.global.t(titleKey.toLowerCase()) : titleKey;
 
   const title =
     translatedTitle && translatedTitle !== titleKey
@@ -18,5 +19,8 @@ router.beforeEach(async to => {
       : `NDTCore - ${titleKey}`;
 
   document.title = title;
+
+  next();
 });
+
 export default router;

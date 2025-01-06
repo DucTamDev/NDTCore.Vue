@@ -1,17 +1,15 @@
-import type { App } from 'vue';
+// @shared/utils/console.utils.ts
 
-// Helper function to log styled messages
 export const logStyledMessage = (message: string, styles: Array<string>) => {
   console.log(`%c${message}`, styles.join(';'));
 };
 
-export const getConsoleWidth = () => {
-  return window.innerWidth; // Gets the window's width
-};
+export class WelcomeMessage {
+  private messages: Array<{ text: string; styles: Array<string> }>;
 
-const WelcomeMessagePlugin = {
-  install(app: App) {
-    const messages = [
+  constructor() {
+    // Initialize messages with predefined styles and texts
+    this.messages = [
       {
         text: 'Welcome to NDTCore.Vue!',
         styles: [
@@ -35,9 +33,16 @@ const WelcomeMessagePlugin = {
       }
     ];
 
-    // Hiển thị thông điệp tự động khi plugin được cài đặt
-    messages.forEach(({ text, styles }) => logStyledMessage(text, styles));
+    // Immediately call displayMessages when an instance is created
+    // this.displayMessages();
   }
-};
 
-export default WelcomeMessagePlugin;
+  // Method to log styled messages
+  public displayMessages() {
+    this.messages.forEach(({ text, styles }) => {
+      logStyledMessage(text, styles);
+    });
+  }
+}
+
+export default new WelcomeMessage();

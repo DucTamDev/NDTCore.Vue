@@ -1,13 +1,61 @@
-import { isRef, nextTick } from 'vue';
-import {
-  createI18n,
-  type Composer,
-  type I18n,
-  type I18nMode,
-  type I18nOptions,
-  type Locale,
-  type VueI18n
-} from 'vue-i18n';
+// import { createI18n, type I18n, type I18nOptions } from 'vue-i18n';
+
+// const fileLocaleDir = import.meta.glob<{ default: Record<string, string> }>(
+//   '@assets/locales/*.json',
+//   {
+//     eager: true
+//   }
+// );
+
+// const SUPPORT_LOCALES = (function loadSupportLocales() {
+//   return Object.keys(fileLocaleDir).map(filePath => {
+//     const fileNameParts = filePath.split('/');
+//     const fileNameWithoutPath = fileNameParts[fileNameParts.length - 1];
+//     const localeName = fileNameWithoutPath.split('.lang.json')[0];
+
+//     return localeName;
+//   });
+// })();
+
+// const I18nOptionsDefault: I18nOptions = {
+//   legacy: false,
+//   locale: 'vi',
+//   fallbackLocale: 'vi',
+//   messages: await loadLocaleMessages()
+// };
+
+// let i18n: I18n | null = null;
+
+// export async function setupI18n(options?: I18nOptions): Promise<I18n> {
+//   if (i18n) {
+//     return i18n;
+//   }
+
+//   options = options || I18nOptionsDefault;
+
+//   i18n = createI18n(options);
+//   return i18n;
+// }
+
+// export async function loadLocaleMessages() {
+//   const localePromises = SUPPORT_LOCALES.map(async locale => {
+//     const data = await import(`@assets/locales/${locale}.lang.json`).then(res => res.default);
+//     console.info(`Loaded messages for language ${locale}:`, data);
+
+//     return [locale, data] as const;
+//   });
+
+//   const loadedLocales = await Promise.all(localePromises);
+//   const fromEntries = Object.fromEntries(loadedLocales);
+
+//   console.log('fromEntries', fromEntries);
+
+//   return fromEntries;
+// }
+
+// export default i18n;
+
+import { createI18n, type I18n, type I18nOptions } from 'vue-i18n';
 
 const fileLocaleDir = import.meta.glob<{ default: Record<string, string> }>(
   '@assets/locales/*.json',
@@ -18,7 +66,6 @@ const fileLocaleDir = import.meta.glob<{ default: Record<string, string> }>(
 
 const SUPPORT_LOCALES = (function loadSupportLocales() {
   return Object.keys(fileLocaleDir).map(filePath => {
-    // Extract the file name
     const fileNameParts = filePath.split('/');
     const fileNameWithoutPath = fileNameParts[fileNameParts.length - 1];
     const localeName = fileNameWithoutPath.split('.lang.json')[0];
@@ -27,18 +74,6 @@ const SUPPORT_LOCALES = (function loadSupportLocales() {
   });
 })();
 
-function isComposer(instance: VueI18n | Composer, mode: I18nMode): instance is Composer {
-  return mode === 'composition' && isRef(instance.locale);
-}
-
-export function getLocale(i18n: I18n): string {
-  if (isComposer(i18n.global, i18n.mode)) {
-    return i18n.global.locale.value;
-  } else {
-    return i18n.global.locale;
-  }
-}
-
 const I18nOptionsDefault: I18nOptions = {
   legacy: false,
   locale: 'vi',
@@ -46,75 +81,60 @@ const I18nOptionsDefault: I18nOptions = {
   messages: {}
 };
 
-export async function setupI18n(options: I18nOptions = I18nOptionsDefault): Promise<I18n> {
-  const i18n = createI18n(options);
-  await setI18nLanguage(i18n, options.locale!);
-  return i18n;
-}
+class I18nPlugin {
+  private static instance: I18nPlugin | null = null;
+  private i18n: I18n | null = null;
 
-export async function setI18nLanguage(i18n: I18n, locale: Locale): Promise<void> {
-  setLocale(i18n, locale);
-  document.querySelector('html')!.setAttribute('lang', locale);
-}
+  private constructor(private options: I18nOptions = I18nOptionsDefault) {}
 
-export function setLocale(i18n: I18n, locale: Locale): void {
-  if (isComposer(i18n.global, i18n.mode)) {
-    i18n.global.locale.value = locale;
-  } else {
-    i18n.global.locale = locale;
+  // Private method to load locale messages
+  private async loadLocaleMessages(): Promise<Record<string, Record<string, string>>> {
+    const localePromises = SUPPORT_LOCALES.map(async locale => {
+      const data = await import(`@assets/locales/${locale}.lang.json`).then(res => res.default);
+      console.info(`Loaded messages for language ${locale}:`, data);
+
+      return [locale, data] as const;
+    });
+
+    const loadedLocales = await Promise.all(localePromises);
+    const fromEntries = Object.fromEntries(loadedLocales);
+
+    console.log('fromEntries', fromEntries);
+
+    return fromEntries;
+  }
+
+  // Public method to initialize i18n
+  public async setupI18n(): Promise<I18n> {
+    if (this.i18n) {
+      return this.i18n;
+    }
+
+    const messages = await this.loadLocaleMessages();
+    this.options.messages = messages;
+    this.i18n = createI18n(this.options);
+    return this.i18n;
+  }
+
+  public async getI18n(): Promise<I18n> {
+    // Ensure the i18n instance is initialized before returning it
+    if (!this.i18n) {
+      await this.setupI18n();
+    }
+
+    return this.i18n!;
+  }
+
+  // Singleton pattern to get the same instance of I18nPlugin
+  public static getInstance(): I18nPlugin {
+    if (!I18nPlugin.instance) {
+      I18nPlugin.instance = new I18nPlugin();
+    }
+    return I18nPlugin.instance;
   }
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const getResourceMessages = (r: any) => r.default || r;
+// Use the singleton instance
+const i18nPlugin = I18nPlugin.getInstance();
 
-export async function loadLocaleMessages(i18n: I18n, locale: Locale): Promise<void> {
-  const data = await import(`./locales/${locale}.json`).then(getResourceMessages);
-
-  // set locale and locale message
-  i18n.global.setLocaleMessage(locale, data);
-
-  return nextTick();
-}
-
-export async function loadAllLocaleMessages() {
-  const fileDir = import.meta.glob<{ default: Record<string, string> }>('@assets/locales/*.json');
-  console.log('File Dir: ', fileDir);
-
-  const fileDirEntries = Object.entries(fileDir);
-  console.log('fileDirEntries', fileDirEntries);
-
-  Object.entries(fileDir).map(async ([path, module]) => {
-    console.log('path: ', path);
-    console.log('module: ', (await module()).default);
-  });
-
-  const localePromises = SUPPORT_LOCALES.map(async locale => {
-    const data = await import(`@assets/locales/${locale}.lang.json`).then(getResourceMessages);
-    console.info(`Loaded messages for language ${locale}:`, data);
-
-    return [locale, data] as const;
-  });
-
-  const loadedLocales = await Promise.all(localePromises);
-  const fromEntries = Object.fromEntries(loadedLocales);
-
-  console.log('fromEntries', fromEntries);
-
-  return fromEntries;
-}
-
-async function setupI18nPlugin() {
-  let messages = await loadAllLocaleMessages();
-
-  return await setupI18n({
-    legacy: false,
-    locale: 'vi',
-    fallbackLocale: 'vi',
-    messages
-  });
-}
-
-const i18n = await setupI18nPlugin();
-
-export default i18n;
+export default i18nPlugin;
