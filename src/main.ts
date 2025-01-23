@@ -4,9 +4,7 @@ import { createPinia } from 'pinia';
 import App from './App.vue';
 import router from '@router/index';
 import WelcomeMessage from '@shared/utils/console.utils';
-import I18nPlugin from '@core/plugins/i18n.plugin';
-import VuetifyPlugin from '@core/plugins/vuetify.plugin';
-import LoggerPlugin from '@core/plugins/logger/LoggerPlugin';
+import { VuetifyPlugin, I18nPlugin, LoggerPlugin } from '@core/plugins/index';
 
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/js/bootstrap.js';
