@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia';
 import ProductService from '@modules/product/services/product.service';
 import { inject } from 'vue';
-import type { ILogger } from '@/core/plugins/logger/ILogger';
+import type { ILogger } from '@/core/types/logger/ILogger';
 
 export const useProductStore = defineStore('productStore', {
   state: () => ({

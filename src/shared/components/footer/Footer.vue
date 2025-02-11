@@ -40,8 +40,8 @@
 
 <style lang="scss" scoped>
   .footer {
-    background-color: #333;
-    color: white;
+    background-color: #f9f9f9;
+    color: var(--color-text);
     padding: 20px 0;
     text-align: center;
   }
@@ -64,11 +64,6 @@
 
   .footer-nav a {
     text-decoration: none;
-    color: white;
-  }
-
-  .footer-nav a:hover {
-    color: #ffcc00;
   }
 
   .social-links {
@@ -83,8 +78,7 @@
 
   .copyright {
     margin-top: 10px;
-    font-size: 14px;
-    color: #bbb;
+    font-size: 13px;
   }
 
   @media (max-width: 768px) {

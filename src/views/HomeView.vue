@@ -4,10 +4,7 @@
 </script>
 
 <template>
-  <div class="home-wrapper">
-    <h3>Home page</h3>
-    <button type="button" class="btn btn-primary">Primary</button>
-  </div>
+  <div class="home-wrapper"></div>
 </template>
 
 <style lang="scss" scoped>
@@ -21,7 +18,6 @@
 
   @media (min-width: 1024px) {
     .home-wrapper {
-      min-height: 80vh;
       display: flex;
       align-items: center;
     }

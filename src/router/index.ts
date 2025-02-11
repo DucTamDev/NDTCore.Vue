@@ -9,9 +9,11 @@ const router = createRouter({
 
 router.beforeEach(async (to, from, next) => {
   const i18nInstance = await i18n.getI18n();
-  const titleKey = to.meta.title as string | undefined;
+  const titleKey = typeof to.meta.title === 'string' ? to.meta.title.toLowerCase() : '';
 
-  const translatedTitle = titleKey ? i18nInstance.global.t(titleKey.toLowerCase()) : titleKey;
+  const translatedTitle = titleKey
+    ? (i18nInstance.global.t as (key: string) => string)(titleKey)
+    : titleKey;
 
   const title =
     translatedTitle && translatedTitle !== titleKey

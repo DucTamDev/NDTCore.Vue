@@ -1,7 +1,7 @@
 import { Product } from '@modules/product/models/Product';
 import ProductApi from '@modules/product/apis/product.api';
 // import { mockProducts } from '@mocks/product/product.mock';
-import type { ILogger } from '@/core/plugins/logger/ILogger';
+import type { ILogger } from '@/core/types/logger/ILogger';
 
 class ProductService {
   private products: Product[] = [];

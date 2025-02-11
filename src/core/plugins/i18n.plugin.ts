@@ -1,60 +1,3 @@
-// import { createI18n, type I18n, type I18nOptions } from 'vue-i18n';
-
-// const fileLocaleDir = import.meta.glob<{ default: Record<string, string> }>(
-//   '@assets/locales/*.json',
-//   {
-//     eager: true
-//   }
-// );
-
-// const SUPPORT_LOCALES = (function loadSupportLocales() {
-//   return Object.keys(fileLocaleDir).map(filePath => {
-//     const fileNameParts = filePath.split('/');
-//     const fileNameWithoutPath = fileNameParts[fileNameParts.length - 1];
-//     const localeName = fileNameWithoutPath.split('.lang.json')[0];
-
-//     return localeName;
-//   });
-// })();
-
-// const I18nOptionsDefault: I18nOptions = {
-//   legacy: false,
-//   locale: 'vi',
-//   fallbackLocale: 'vi',
-//   messages: await loadLocaleMessages()
-// };
-
-// let i18n: I18n | null = null;
-
-// export async function setupI18n(options?: I18nOptions): Promise<I18n> {
-//   if (i18n) {
-//     return i18n;
-//   }
-
-//   options = options || I18nOptionsDefault;
-
-//   i18n = createI18n(options);
-//   return i18n;
-// }
-
-// export async function loadLocaleMessages() {
-//   const localePromises = SUPPORT_LOCALES.map(async locale => {
-//     const data = await import(`@assets/locales/${locale}.lang.json`).then(res => res.default);
-//     console.info(`Loaded messages for language ${locale}:`, data);
-
-//     return [locale, data] as const;
-//   });
-
-//   const loadedLocales = await Promise.all(localePromises);
-//   const fromEntries = Object.fromEntries(loadedLocales);
-
-//   console.log('fromEntries', fromEntries);
-
-//   return fromEntries;
-// }
-
-// export default i18n;
-
 import { createI18n, type I18n, type I18nOptions } from 'vue-i18n';
 
 const fileLocaleDir = import.meta.glob<{ default: Record<string, string> }>(
@@ -98,8 +41,6 @@ class I18nPlugin {
 
     const loadedLocales = await Promise.all(localePromises);
     const fromEntries = Object.fromEntries(loadedLocales);
-
-    console.log('fromEntries', fromEntries);
 
     return fromEntries;
   }

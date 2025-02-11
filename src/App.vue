@@ -10,6 +10,6 @@
 
 <style lang="scss" scoped>
   .app-wrapper {
-    background-color: $background-color;
+    background-color: var(--color-background);
   }
 </style>
