@@ -1,11 +1,12 @@
 import { defineStore } from 'pinia';
-import ProductService from '@modules/product/services/product.service';
 import { inject } from 'vue';
-import type { ILogger } from '@/core/types/logger/ILogger';
+import ProductService from '@modules/product/services/product.service';
+import type { ILogger } from '@core/types/logger/ILogger';
+import type { Product } from '@modules/product/models/Product';
 
 export const useProductStore = defineStore('productStore', {
   state: () => ({
-    products: [] as Array<{ id: number; name: string; price: number }>,
+    products: [] as Array<Product>,
     isLoading: false,
     error: ''
   }),

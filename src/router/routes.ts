@@ -3,6 +3,7 @@ import BlankLayout from '@/shared/layouts/BlankLayout.vue';
 import AboutView from '@/views/AboutView.vue';
 import HomeView from '@/views/HomeView.vue';
 import NotFoundView from '@/views/NotFoundView.vue';
+import LoginView from '@/views/LoginView.vue';
 
 const routes = [
   {
@@ -35,8 +36,8 @@ const routes = [
       {
         path: 'login',
         alias: 'login',
-        name: 'NotFound',
-        component: NotFoundView,
+        name: 'Login',
+        component: LoginView,
         meta: { title: 'login' }
       },
       {

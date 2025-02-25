@@ -4,11 +4,11 @@
 </script>
 
 <template>
-  <div class="home-wrapper"></div>
+  <div class="home-view"></div>
 </template>
 
 <style lang="scss" scoped>
-  .home-wrapper {
+  .home-view {
     width: 100%;
 
     h3 {
@@ -17,7 +17,7 @@
   }
 
   @media (min-width: 1024px) {
-    .home-wrapper {
+    .home-view {
       display: flex;
       align-items: center;
     }

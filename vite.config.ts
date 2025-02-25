@@ -14,6 +14,9 @@ export default defineConfig(({ mode }: ConfigEnv) => {
 
   return {
     plugins: [vue(), vueDevTools()],
+    build: {
+      target: 'esnext'
+    },
     resolve: {
       alias: {
         '@': fileURLToPath(new URL('./src', import.meta.url)),
