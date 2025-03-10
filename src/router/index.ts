@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import routes from './routes';
-import i18n from '@core/plugins/i18n.plugin';
+import i18n from '@/core/plugins/i18n';
 
 const router = createRouter({
   history: createWebHistory(),

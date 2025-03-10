@@ -6,7 +6,7 @@
 
 <script setup lang="ts">
   import { onMounted } from 'vue';
-  import { useProductStore } from '@modules/product/store/product.store';
+  import { useProductStore } from '@/modules/product/store/product';
   const productStore = useProductStore();
 
   onMounted(() => {

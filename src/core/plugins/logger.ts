@@ -1,7 +1,7 @@
 import { inject, type App } from 'vue';
-import { Logger } from '@core/types/logger/Logger';
-import type { LoggerOptions } from '@core/types/logger/LoggerOptions';
-import { LogLevel } from '@core/types/logger/LogLevel';
+import { Logger } from './logger/Logger';
+import type { LoggerOptions } from './logger/LoggerOptions';
+import { LogLevel } from './logger/LogLevel';
 
 const loggerSymbol = Symbol('ndtcore-logger-plugin');
 

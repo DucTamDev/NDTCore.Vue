@@ -1,4 +1,4 @@
-import BaseService from '@core/services/base.service';
+import BaseService from '@/core/services/base';
 import type { Product } from '@modules/product/models/Product';
 
 class ProductApi extends BaseService {

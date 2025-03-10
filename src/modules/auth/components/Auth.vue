@@ -6,7 +6,7 @@
 
 <script setup lang="ts">
   import { onMounted, ref } from 'vue';
-  import authService from '@modules/auth/services/auth.service';
+  import authService from '@/modules/auth/services/auth';
   import { ResponseLogin } from '@modules/auth/models/ResponseLogin';
   import { RequestLogin } from '@modules/auth/models/RequestLogin';
 

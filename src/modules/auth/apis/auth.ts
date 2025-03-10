@@ -1,4 +1,4 @@
-import BaseService from '@core/services/base.service';
+import BaseService from '@/core/services/base';
 import type { RequestLogin } from '@/modules/auth/models/RequestLogin';
 import type { ResponseLogin } from '@/modules/auth/models/ResponseLogin';
 

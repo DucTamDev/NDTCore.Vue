@@ -3,7 +3,7 @@ import axios, {
   type AxiosRequestConfig,
   type RawAxiosRequestHeaders
 } from 'axios';
-import { addHttpInterceptor } from '@core/interceptors/request.interceptor';
+import { addHttpInterceptor } from '@/core/interceptors/request';
 
 class BaseService {
   private http!: AxiosInstance;
